@@ -5,7 +5,7 @@ A full-stack complaint management system for municipal governance. Citizens file
 **Backend:** NestJS · TypeORM · PostgreSQL  
 **Frontend:** Next.js 14 (App Router) · Tailwind CSS · shadcn/ui  
 **Auth:** JWT via HttpOnly cookies (access 15m · refresh 7d)  
-**Storage:** Cloudinary · **Email:** Resend SMTP  
+**Storage:** Cloudinary · **Email:** Resend SMTP => Gmail SMTP
 **Deploy:** Railway (backend + DB) or Render · Vercel (frontend)
 
 ---
