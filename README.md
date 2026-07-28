@@ -93,7 +93,7 @@ To reseed: `docker compose down -v && docker compose up`
 
 ## Deployment
 
-**Backend → Railway**
+**Backend → Railway Or Render for deployment of backend**
 1. Connect repo, set root directory to `backend/`
 2. Add all env vars from `backend/.env.example`
 3. Add PostgreSQL plugin (sets `DATABASE_URL` automatically)
