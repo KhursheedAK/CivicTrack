@@ -1,7 +1,6 @@
 # Project documentation
-docs/
 CLAUDE.md
-
+/docs
 # AI agent directory
 .claude/
 
