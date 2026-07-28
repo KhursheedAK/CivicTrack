@@ -1,0 +1,10 @@
+# Project documentation
+docs/
+CLAUDE.md
+
+# AI agent directory
+.claude/
+
+# IDE files
+.vscode/
+.idea/

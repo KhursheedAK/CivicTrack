@@ -1,0 +1,274 @@
+@import "leaflet/dist/leaflet.css";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer base {
+  .theme {
+    --font-heading: var(--font-sans);
+    --font-sans: var(--font-sans);
+  }
+  :root {
+    --background: oklch(0.985 0.002 247.839);
+    --foreground: oklch(0.145 0 0);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.145 0 0);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.145 0 0);
+    --primary: oklch(0.546 0.245 262.881);
+    --primary-foreground: oklch(0.985 0 0);
+    --secondary: oklch(0.97 0 0);
+    --secondary-foreground: oklch(0.205 0 0);
+    --muted: oklch(0.97 0 0);
+    --muted-foreground: oklch(0.556 0 0);
+    --accent: oklch(0.97 0 0);
+    --accent-foreground: oklch(0.205 0 0);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0.922 0 0);
+    --input: oklch(0.922 0 0);
+    --ring: oklch(0.546 0.245 262.881);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --radius: 0.625rem;
+    --sidebar: oklch(0.985 0 0);
+    --sidebar-foreground: oklch(0.145 0 0);
+    --sidebar-primary: oklch(0.205 0 0);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.97 0 0);
+    --sidebar-accent-foreground: oklch(0.205 0 0);
+    --sidebar-border: oklch(0.922 0 0);
+    --sidebar-ring: oklch(0.708 0 0);
+  }
+  .dark {
+    /* Intentional dark theme — a deep navy family designed on its own terms, not
+       an inversion of the light palette. Raw tokens first, then the shadcn/
+       Tailwind-consumed semantic vars are aliased onto them below so every
+       component that already uses bg-background/bg-card/text-foreground/etc.
+       (all of components/ui/*, plus anything using the remapped tokens) picks
+       up the new look automatically. */
+    --bg-chrome: #0d1526; /* sidebar / topbar shell — darkest, recedes behind content */
+    --bg-base: #0b1120; /* page canvas */
+    --bg-surface: #111a2e; /* cards, panels, table containers */
+    --bg-surface-2: #1a2540; /* nested cards, inputs, hover rows, segmented controls */
+    --bg-surface-3: #223052; /* active/pressed states, open dropdowns */
+    --bg-surface-2-50: rgba(26, 37, 64, 0.5); /* bg-surface-2 at 50% opacity, for hover states over non-solid backgrounds */
+
+    --border-subtle: rgba(148, 163, 184, 0.12);
+    --border-strong: rgba(148, 163, 184, 0.25);
+
+    --text-primary: #e8edf7;
+    --text-secondary: #a7b4cc;
+    --text-muted: #6b7a99;
+
+    --brand-accent: #4d8dff; /* one brightness step up from the light-mode blue-600 */
+    --brand-accent-glow: rgba(77, 141, 255, 0.25);
+
+    --success: #34d399;
+    --success-bg: rgba(52, 211, 153, 0.12);
+    --warning: #fbbf24;
+    --warning-bg: rgba(251, 191, 36, 0.12);
+    --danger: #f87171;
+    --danger-bg: rgba(248, 113, 113, 0.12);
+
+    /* Form-field affordance — a "sunken well" recipe so inputs/selects/textareas
+       read as typeable at rest, distinct from both the surface they sit on and
+       from plain text. Deliberately one flat well tone (darker than every
+       surface tier) rather than a per-container-tier value, so one recipe works
+       identically inside cards and inside modals. */
+    --input-well: #0a101f;
+    --input-well-focus: #0d1526;
+    --input-border: rgba(148, 163, 184, 0.28);
+    --input-border-hover: rgba(148, 163, 184, 0.45);
+    --input-placeholder: #5a6a8c;
+    --input-disabled-border: rgba(148, 163, 184, 0.1);
+
+    /* shadcn/Tailwind semantic vars, aliased onto the tokens above */
+    --background: var(--bg-base);
+    --foreground: var(--text-primary);
+    --card: var(--bg-surface);
+    --card-foreground: var(--text-primary);
+    --popover: var(--bg-surface-2);
+    --popover-foreground: var(--text-primary);
+    --primary: var(--brand-accent);
+    --primary-foreground: var(--bg-base); /* dark navy label on the bright accent clears WCAG AA where white would not */
+    --secondary: var(--bg-surface-2);
+    --secondary-foreground: var(--text-primary);
+    --muted: var(--bg-surface);
+    --muted-foreground: var(--text-muted);
+    /* NOTE: shadcn's --accent/--accent-foreground drive neutral hover surfaces on
+       ui/* primitives (dropdown/select items etc.) — kept as a surface tone, not
+       the brand blue, so those hover states don't turn bright blue everywhere.
+       Use --brand-accent above for actual brand-colored accents/glows. */
+    --accent: var(--bg-surface-2);
+    --accent-foreground: var(--text-primary);
+    --destructive: var(--danger);
+    --border: var(--border-subtle);
+    --input: var(--bg-surface-2);
+    --ring: var(--brand-accent); /* solid color — utilities like ring-ring/50 apply their own opacity via color-mix() */
+    --chart-1: #60a5fa;
+    --chart-2: var(--success);
+    --chart-3: var(--warning);
+    --chart-4: #f472b6;
+    --chart-5: #a78bfa;
+    --sidebar: var(--bg-chrome);
+    --sidebar-foreground: var(--text-primary);
+    --sidebar-primary: var(--brand-accent);
+    --sidebar-primary-foreground: var(--bg-base);
+    --sidebar-accent: var(--bg-surface-2);
+    --sidebar-accent-foreground: var(--text-primary);
+    --sidebar-border: var(--border-subtle);
+    --sidebar-ring: var(--brand-accent);
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Dark-mode-only elevation / depth system. Deliberately scoped under `.dark`
+   so light mode (already finished, do not touch) is provably unaffected —
+   these selectors don't exist without the `.dark` ancestor.
+   Ladder: chrome (--bg-chrome) < base (--bg-base) < surface (--bg-surface,
+   elev-1) < surface-2 (--bg-surface-2, elev-1 hover / elev-2) < surface-3
+   (--bg-surface-3, elev-3 modals/dropdowns).
+--------------------------------------------------------------------------- */
+.dark .elev-1 {
+  background: linear-gradient(180deg, #16213b 0%, var(--bg-surface) 100%);
+  border: 1px solid var(--border-subtle);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 8px 24px rgba(0, 0, 0, 0.35);
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+.dark .elev-1.elev-hover:hover,
+.dark .elev-2 {
+  transform: translateY(-2px);
+  border-color: rgba(77, 141, 255, 0.35);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 12px 32px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(77, 141, 255, 0.15);
+}
+.dark .elev-3 {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-strong);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 20px 48px rgba(0, 0, 0, 0.55);
+}
+
+.dark .elev-1.band-accent-top {
+  border-top: 1px solid rgba(77, 141, 255, 0.4);
+}
+
+/* Per-stat-card colored identity bottom border (Step 5.2) */
+.dark .elev-1.stat-border-blue {
+  border-bottom: 2px solid rgba(77, 141, 255, 0.4);
+}
+.dark .elev-1.stat-border-green {
+  border-bottom: 2px solid rgba(52, 211, 153, 0.4);
+}
+.dark .elev-1.stat-border-amber {
+  border-bottom: 2px solid rgba(251, 191, 36, 0.4);
+}
+.dark .elev-1.stat-border-orange {
+  border-bottom: 2px solid rgba(249, 115, 22, 0.4);
+}
+.dark .elev-1.stat-border-violet {
+  border-bottom: 2px solid rgba(167, 139, 250, 0.4);
+}
+.dark .elev-1.stat-border-rose {
+  border-bottom: 2px solid rgba(244, 63, 94, 0.4);
+}
+
+/* Stat/number glow + status pills, reused across analytics + badges */
+.dark .text-glow-accent {
+  text-shadow: 0 0 24px var(--brand-accent-glow);
+}
+.dark .pill-success {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.dark .pill-warning {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+.dark .pill-danger {
+  background: var(--danger-bg);
+  color: var(--danger);
+}
+
+/* Global polish */
+.dark img {
+  filter: brightness(0.9) saturate(0.95);
+}
+.dark *:focus-visible {
+  outline: 2px solid rgba(77, 141, 255, 0.5);
+  outline-offset: 2px;
+}
+.dark ::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.dark ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--bg-surface-3);
+  border-radius: 9999px;
+}
+
+/* Chrome/Edge paint autofilled inputs with an opaque light background that
+   ignores normal CSS background-color — must be overridden via this
+   webkit-only pseudo-class or autofilled fields blow out against the dark
+   surfaces regardless of any Tailwind class applied to the input itself. */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark textarea:-webkit-autofill {
+  -webkit-box-shadow: inset 0 0 0 1000px var(--input-well) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  caret-color: var(--text-primary);
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* Best-effort label-turns-accent-on-focus: targets the "<div className=
+   'space-y-1'><Label/><Input/></div>" field-wrapper convention used
+   throughout the app's forms, without requiring every call site to be
+   touched individually. No-op wherever that convention isn't used. */
+.dark .space-y-1:has(:focus) > label,
+.dark .space-y-2:has(:focus) > label {
+  color: var(--brand-accent);
+}
+
+/* Required-field asterisk: driven entirely by the native `required` attribute
+   (native inputs/textareas) or the Select component's `data-required` (it
+   isn't a native form control, so `:required` doesn't match it) — add
+   `required` to a field and the asterisk appears with no other markup. */
+.dark .space-y-1:has(:required) > label::after,
+.dark .space-y-2:has(:required) > label::after,
+.dark .space-y-1:has([data-required]) > label::after,
+.dark .space-y-2:has([data-required]) > label::after {
+  content: " *";
+  color: var(--danger);
+}

@@ -1,0 +1,36 @@
+# civic-frontend — Next.js standalone server
+# NEXT_PUBLIC_API_URL is baked in at build time.
+# Override: docker build --build-arg NEXT_PUBLIC_API_URL=http://your-host:3001/api
+
+# ── Build stage ───────────────────────────────────────────────────────────────
+FROM node:20-slim AS build
+
+WORKDIR /build
+COPY frontend/package*.json ./
+RUN npm ci
+COPY frontend/ .
+
+ARG NEXT_PUBLIC_API_URL=http://localhost:3001/api
+ARG NEXT_PUBLIC_APP_NAME=CivicTrack
+ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL \
+    NEXT_PUBLIC_APP_NAME=$NEXT_PUBLIC_APP_NAME \
+    NEXT_TELEMETRY_DISABLED=1 \
+    NODE_ENV=production
+
+RUN npm run build
+
+# ── Runtime stage ─────────────────────────────────────────────────────────────
+FROM node:20-slim
+
+WORKDIR /app
+COPY --from=build /build/.next/standalone ./
+COPY --from=build /build/.next/static     ./.next/static
+RUN mkdir -p /app/public
+
+ENV NODE_ENV=production \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0 \
+    NEXT_TELEMETRY_DISABLED=1
+
+EXPOSE 3000
+CMD ["node", "server.js"]

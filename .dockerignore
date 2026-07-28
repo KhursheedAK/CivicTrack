@@ -1,0 +1,26 @@
+# Dependencies (reinstalled inside the image)
+backend/node_modules
+frontend/node_modules
+
+# Build outputs (rebuilt inside the image)
+backend/dist
+frontend/.next
+
+# Environment files (set via docker run -e or --env-file)
+**/.env
+**/.env.local
+**/.env.production
+**/.env.development
+
+# Git
+.git
+.gitignore
+**/.gitkeep
+
+# Docs and IDE
+*.md
+.vscode
+.idea
+
+Dockerfile
+.dockerignore
