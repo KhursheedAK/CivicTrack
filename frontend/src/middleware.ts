@@ -33,12 +33,11 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // ── Site-password gate ────────────────────────────────────────────────────
+  if (pathname.startsWith("/site-access")) return NextResponse.next();
   const sitePassword = process.env.SITE_PASSWORD;
   if (sitePassword) {
     const siteCookie = request.cookies.get("site_access")?.value;
-    const isAccessRoute = pathname.startsWith("/site-access");
-    const isApiRoute = pathname.startsWith("/api/site-access");
-    if (!isAccessRoute && !isApiRoute && siteCookie !== sitePassword) {
+    if (siteCookie !== sitePassword) {
       const url = request.nextUrl.clone();
       url.pathname = "/site-access/verify";
       url.searchParams.set("from", pathname);
