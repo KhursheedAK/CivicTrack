@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SiteAccessPage() {
+function SiteAccessForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -62,5 +62,13 @@ export default function SiteAccessPage() {
         </form>
       </div>
     </div>
+  );
+}
+
+export default function SiteAccessPage() {
+  return (
+    <Suspense>
+      <SiteAccessForm />
+    </Suspense>
   );
 }
