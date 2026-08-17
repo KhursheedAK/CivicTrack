@@ -6,7 +6,7 @@ A full-stack complaint management system for municipal governance. Citizens file
 **Frontend:** Next.js 14 (App Router) · Tailwind CSS · shadcn/ui  
 **Auth:** JWT via HttpOnly cookies (access 15m · refresh 7d)  
 **Storage:** Cloudinary · **Email:** Resend SMTP => Gmail SMTP
-**Deploy:** Railway (backend + DB) or Render · Vercel (frontend)
+**Deploy:** Vercel (frontend + serverless backend) · Neon.tech (serverless database)
 
 ---
 
@@ -93,14 +93,20 @@ To reseed: `docker compose down -v && docker compose up`
 
 ## Deployment
 
-**Backend → Railway Or Render for deployment of backend**
-1. Connect repo, set root directory to `backend/`
-2. Add all env vars from `backend/.env.example`
-3. Add PostgreSQL plugin (sets `DATABASE_URL` automatically)
+Both the frontend and backend are deployed on **Vercel** (Hobby tier, completely free with no credit card required).
 
-**Frontend → Vercel**
-1. Connect repo, set root directory to `frontend/`
-2. Set `NEXT_PUBLIC_API_URL` to the Railway backend URL
+**Backend (NestJS Serverless API)**
+1. Connect your repository to Vercel, set the **Root Directory** to `backend`.
+2. Vercel automatically builds the project using the configured [backend/vercel.json](file:///d:/PSEB-Related/apprenticeship/civic_tracker/citizen_complaint_portal/backend/vercel.json) and [backend/api/index.ts](file:///d:/PSEB-Related/apprenticeship/civic_tracker/citizen_complaint_portal/backend/api/index.ts).
+3. Set the environment variables in Vercel settings: `DATABASE_URL` (Neon PostgreSQL), `JWT_ACCESS_SECRET`, `JWT_REFRESH_SECRET`, `FRONTEND_URL` (your frontend Vercel URL), and `NODE_ENV=production`.
+
+**Frontend (Next.js)**
+1. Connect your repository to Vercel, set the **Root Directory** to `frontend`.
+2. In Vercel settings, set the environment variable: `NEXT_PUBLIC_API_URL` (your Vercel backend URL appended with `/api`, e.g. `https://civic-track-backend.vercel.app/api`).
+3. Vercel automatically builds and deploys your Next.js application.
+
+> [!NOTE]
+> The Next.js frontend has a proxy rewrite configured in [frontend/next.config.mjs](file:///d:/PSEB-Related/apprenticeship/civic_tracker/citizen_complaint_portal/frontend/next.config.mjs) that maps `/api/*` to the backend. This keeps HTTP-only cookies same-origin to prevent authentication and CORS issues.
 
 ---
 
