@@ -4,9 +4,10 @@ import type { AppNotification, Category, Complaint, ComplaintAttachment, Complai
 // ─── Axios instance ────────────────────────────────────────────────────────────
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
+  baseURL: '/api',
   withCredentials: true,
 });
+
 
 // ─── Refresh-token interceptor ─────────────────────────────────────────────────
 
