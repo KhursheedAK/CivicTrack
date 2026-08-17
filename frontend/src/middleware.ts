@@ -32,6 +32,21 @@ const ROLE_HOME: Record<string, string> = {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
+  // ── Site-password gate ────────────────────────────────────────────────────
+  const sitePassword = process.env.SITE_PASSWORD;
+  if (sitePassword) {
+    const siteCookie = request.cookies.get("site_access")?.value;
+    const isAccessRoute = pathname.startsWith("/site-access");
+    const isApiRoute = pathname.startsWith("/api/site-access");
+    if (!isAccessRoute && !isApiRoute && siteCookie !== sitePassword) {
+      const url = request.nextUrl.clone();
+      url.pathname = "/site-access/verify";
+      url.searchParams.set("from", pathname);
+      return NextResponse.redirect(url);
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Allow public paths
   if (PUBLIC_PATHS.some((p) => pathname === p || pathname.startsWith(p + "/"))) {
     // If already authenticated, redirect away from login/register
