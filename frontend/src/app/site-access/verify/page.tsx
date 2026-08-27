@@ -60,6 +60,15 @@ function SiteAccessForm() {
             {loading ? "Verifying…" : "Enter"}
           </button>
         </form>
+        <p className="text-xs text-center text-gray-400 mt-6">
+          Don&apos;t have the password?{" "}
+          <a
+            href="mailto:khursheedakhan.engineer@gmail.com?subject=CivicTrack%20Access%20Request"
+            className="text-blue-500 hover:underline"
+          >
+            Request access
+          </a>
+        </p>
       </div>
     </div>
   );
