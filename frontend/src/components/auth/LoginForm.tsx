@@ -15,6 +15,7 @@ import { PasswordInput } from "@/components/shared/PasswordInput";
 import { authApi } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
+import { DemoAccounts, type DemoAccount } from "@/components/auth/DemoAccounts";
 
 const ROLE_HOME: Record<string, string> = {
   CITIZEN: "/dashboard",
@@ -35,16 +36,26 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const { setUser } = useAuth();
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [demoRole, setDemoRole] = useState<DemoAccount["role"] | null>(null);
+  const showDemo = process.env.NEXT_PUBLIC_SHOW_DEMO_ACCOUNTS !== "false";
 
   const {
     register,
     control,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "", remember: false },
   });
+
+  function handleDemoSelect(account: DemoAccount) {
+    setValue("email", account.email, { shouldValidate: true });
+    setValue("password", account.password, { shouldValidate: true });
+    setDemoRole(account.role);
+    void onSubmit({ email: account.email, password: account.password, remember: false });
+  }
 
   async function onSubmit(values: LoginValues) {
     setStatus("loading");
@@ -57,6 +68,7 @@ export function LoginForm() {
       setTimeout(() => router.push(dest), 600);
     } catch (err: unknown) {
       setStatus("idle");
+      setDemoRole(null);
       const msg =
         (err as { response?: { data?: { error?: string } } })?.response?.data?.error ||
         "Invalid email or password.";
@@ -76,6 +88,16 @@ export function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" noValidate>
+      {showDemo && (
+        <>
+          <DemoAccounts onSelect={handleDemoSelect} activeRole={demoRole} disabled={status === "loading"} />
+          <div className="flex items-center gap-3 text-xs text-gray-600 dark:text-[var(--text-secondary)]">
+            <span className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+            or sign in with your account
+            <span className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
+          </div>
+        </>
+      )}
       <div className="space-y-1">
         <Label htmlFor="email">Email Address</Label>
         <div className="relative">
