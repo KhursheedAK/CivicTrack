@@ -50,11 +50,11 @@ interface DemoAccountsProps {
 
 export function DemoAccounts({ onSelect, activeRole, disabled }: DemoAccountsProps) {
   return (
-    <div className="rounded-lg border border-dashed border-blue-200 bg-blue-50/50 p-3 dark:border-[var(--brand-accent)]/30 dark:bg-[var(--brand-accent)]/5">
-      <p className="text-xs font-bold uppercase tracking-wide text-gray-900 dark:text-[var(--text-primary)]">
+    <div className="rounded-lg border border-slate-300 bg-slate-100 p-3 dark:border-slate-600 dark:bg-[#0b1120]">
+      <p className="text-xs font-bold uppercase tracking-wide text-slate-900 dark:text-white">
         Try a demo account
       </p>
-      <p className="mt-0.5 text-xs text-gray-700 dark:text-[var(--text-secondary)]">
+      <p className="mt-0.5 text-xs font-medium text-slate-700 dark:text-slate-300">
         Pick a role to fill the credentials and sign in instantly.
       </p>
       <div className="mt-3 grid grid-cols-3 gap-2">
@@ -68,15 +68,15 @@ export function DemoAccounts({ onSelect, activeRole, disabled }: DemoAccountsPro
               disabled={disabled}
               onClick={() => onSelect(account)}
               title={`${account.email} / ${account.password}`}
-              className="group flex flex-col items-center gap-1.5 rounded-md border border-gray-200 bg-white px-2 py-3 text-center transition hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 dark:border-white/10 dark:bg-[var(--bg-surface,transparent)] dark:hover:border-[var(--brand-accent)]"
+              className="group flex flex-col items-center gap-1.5 rounded-md border border-slate-300 bg-white px-2 py-3 text-center transition hover:-translate-y-0.5 hover:border-blue-400 hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 dark:border-slate-600 dark:bg-[#16213b] dark:hover:border-blue-400"
             >
               <span className={`flex h-9 w-9 items-center justify-center rounded-full ${account.tone}`}>
                 {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Icon className="h-4 w-4" />}
               </span>
-              <span className="text-sm font-semibold text-gray-900 dark:text-[var(--text-primary)]">
+              <span className="text-sm font-semibold text-slate-900 dark:text-white">
                 {account.label}
               </span>
-              <span className="text-[11px] leading-tight text-gray-600 dark:text-[var(--text-secondary)]">
+              <span className="text-[11px] font-medium leading-tight text-slate-700 dark:text-slate-300">
                 {account.description}
               </span>
             </button>

@@ -91,7 +91,7 @@ export function LoginForm() {
       {showDemo && (
         <>
           <DemoAccounts onSelect={handleDemoSelect} activeRole={demoRole} disabled={status === "loading"} />
-          <div className="flex items-center gap-3 text-xs text-gray-600 dark:text-[var(--text-secondary)]">
+          <div className="flex items-center gap-3 text-xs font-medium text-slate-700 dark:text-slate-300">
             <span className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
             or sign in with your account
             <span className="h-px flex-1 bg-gray-200 dark:bg-white/10" />
